@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas y Alumnos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        form {
+            margin-top: 20px;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"], input[type="submit"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4cafad;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #457da0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Notas y Alumnos</h1>
+
+    <h2>Notas</h2>
+    <table>
+        <tr>
+            <th>Alumno</th>
+            <th>Matemáticas</th>
+            <th>Biología</th>
+            <th>Sociales</th>
+        </tr>
+        {% for nota in notas %}
+        <tr>
+            <td>{{ nota[1] }}</td>
+            <td>{{ nota[2] }}</td>
+            <td>{{ nota[3] }}</td>
+            <td>{{ nota[4] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Alumnos</h2>
+    <form action="/agregar_estudiante" method="post">
+        <label for="nombre">Nombre del estudiante:</label>
+        <input type="text" id="nombre" name="nombre">
+        <input type="submit" value="Agregar estudiante">
+    </form>
+
+    <h2>Eliminar Estudiante</h2>
+    <form action="/eliminar_estudiante" method="post">
+        <label for="nombre">Seleccione el estudiante a eliminar:</label>
+        <select id="nombre" name="nombre">
+            {% for alumno in alumnos %}
+                <option value="{{ alumno[0] }}">{{ alumno[0] }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Eliminar estudiante">
+    </form>
+
+    <h2>Editar Nota</h2>
+    <form action="/editar_nota" method="post">
+        <label for="alumno">Seleccione el estudiante:</label>
+        <select id="alumno" name="alumno">
+            {% for alumno in alumnos %}
+                <option value="{{ alumno[0] }}">{{ alumno[0] }}</option>
+            {% endfor %}
+        </select>
+        <label for="materia">Materia:</label>
+        <select id="materia" name="materia">
+            <option value="matematicas">Matemáticas</option>
+            <option value="biologia">Biología</option>
+            <option value="sociales">Sociales</option>
+        </select>
+        <label for="nueva_nota">Nueva Nota:</label>
+        <input type="text" id="nueva_nota" name="nueva_nota">
+        <input type="submit" value="Editar nota">
+    </form>
+</body>
+</html>
